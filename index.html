@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Foodie - Delicious Food Delivery</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary: #FF6B6B;
+            --primary-dark: #ee5253;
+            --secondary: #2C3E50;
+            --text-light: #6c757d;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            color: var(--secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- 1. NAVBAR --- */
+        .navbar {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Mobile Menu - Pure CSS Checkbox Hack */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        #nav-check {
+            display: none;
+        }
+
+        /* --- 2. HERO SECTION --- */
+        .hero {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 90%;
+            border-radius: 20px; /* Slight rounding if needed */
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- 3. SEARCH BAR --- */
+        .search-container {
+            background: var(--white);
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            border-right: 1px solid #eee;
+        }
+
+        .search-box:last-child {
+            border-right: none;
+        }
+
+        .search-box i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .search-box input, .search-box select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            background: transparent;
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* --- 4. CATEGORY GRID --- */
+        .categories {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .category-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            background: #fff0f0;
+            box-shadow: var(--shadow);
+        }
+
+        .category-img {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .category-card span {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* --- 5. FEATURED RESTAURANTS --- */
+        .featured {
+            padding: 4rem 0;
+            background: #f9f9f9;
+        }
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .rest-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .rest-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .rest-img-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .rest-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .discount-tag {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .rest-info {
+            padding: 1.5rem;
+        }
+
+        .rest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .rest-header h3 {
+            font-size: 1.2rem;
+        }
+
+        .rating {
+            background: #e1f7e6;
+            color: #2ecc71;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tags {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .rest-meta {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* --- 6. PROMO OFFERS --- */
+        .offers {
+            padding: 4rem 0;
+        }
+
+        .offers-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .offer-card {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-card.secondary {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+        }
+
+        .offer-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .offer-text p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .offer-btn {
+            background: white;
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .offer-card.secondary .offer-btn {
+            color: #11998e;
+        }
+
+        .offer-img {
+            font-size: 6rem;
+            opacity: 0.2;
+            transform: rotate(-20deg);
+        }
+
+        /* --- 7. TESTIMONIALS --- */
+        .testimonials {
+            padding: 4rem 0;
+            background: #fff5f5;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .test-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .user-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: -3.5rem auto 1rem;
+            border: 4px solid white;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .test-text {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: #f1c40f;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        /* --- 8. APP DOWNLOAD --- */
+        .app-download {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .app-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(to right, #fff0f0 0%, white 100%);
+            border-radius: 30px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-text {
+            flex: 1;
+            z-index: 1;
+        }
+
+        .app-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .store-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+
+        .store-btn:hover {
+            transform: translateY(-3px);
+            background: black;
+        }
+
+        .store-text span {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 300;
+        }
+        
+        .store-text strong {
+            font-size: 1rem;
+        }
+
+        .app-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+        
+        .app-image-container img {
+            max-width: 350px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            margin-bottom: -4rem; /* Makes it look like it's popping out */
+        }
+
+        /* --- 9. FOOTER --- */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 4rem 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            background: #233140;
+            padding: 1.5rem 0;
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 992px) {
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-image img { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Nav Logic */
+            .menu-toggle { display: block; color: var(--secondary); }
+            
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            /* Pure CSS Toggle Logic */
+            #nav-check:checked ~ .nav-links {
+                transform: translateY(0);
+            }
+
+            .nav-buttons { display: none; } /* Hide buttons on small mobile for space */
+
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .search-container {
+                margin: 0 auto 2rem;
+                width: 100%;
+            }
+
+            .app-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+            
+            .app-image-container {
+                justify-content: center;
+                margin-top: 2rem;
+            }
+
+            .app-image-container img {
+                margin-bottom: 0;
+                width: 80%;
+            }
+
+            .app-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVBAR -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i> Foodie
+            </a>
+
+            <!-- Pure CSS Mobile Menu Toggle -->
+            <input type="checkbox" id="nav-check">
+            <label for="nav-check" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#categories">Categories</a>
+                <a href="#restaurants">Restaurants</a>
+                <a href="#offers">Offers</a>
+                <a href="#app">Get App</a>
+            </nav>
+
+            <div class="nav-buttons">
+                <button class="btn btn-outline">Sign In</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Hungry? We deliver <br><span>Happiness</span> to you.</h1>
+                <p>Get the best food from top-rated restaurants delivered to your doorstep instantly. Fresh, tasty, and fast!</p>
+                
+                <!-- 3. SEARCH BAR (Integrated) -->
+                <form class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" placeholder="Location">
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search food...">
+                    </div>
+                    <button type="button" class="search-btn">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="hero-cta">
+                    <button class="btn btn-primary">Order Now</button>
+                    <button class="btn btn-outline" style="border:none; margin-left: 10px;">
+                        <i class="fas fa-play-circle"></i> How it works
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <!-- Using a high quality Unsplash food image -->
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Delicious Food Bowl">
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CATEGORY GRID -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Categories</h2>
+                <p>What are you craving today?</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-img">🍔</div>
+                    <span>Burger</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">🍕</div>
+                    <span>Pizza</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">🍣</div>
+                    <span>Sushi</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">🥗</div>
+                    <span>Healthy</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">🍜</div>
+                    <span>Asian</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-img">🍩</div>
+                    <span>Dessert</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FEATURED RESTAURANTS -->
+    <section class="featured" id="restaurants">
+        <div class="container">
+            <div class="section-title">
+                <h2>Popular Restaurants</h2>
+                <p>Top rated kitchens near you</p>
+            </div>
+            <div class="restaurant-grid">
+                <!-- Card 1 -->
+                <div class="rest-card">
+                    <div class="rest-img-container">
+                        <span class="discount-tag">20% OFF</span>
+                        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant 1">
+                    </div>
+                    <div class="rest-info">
+                        <div class="rest-header">
+                            <h3>SONU FAST FOOD CORNER</h3>
+                            <div class="rating"><i class="fas fa-star"></i> 4.8</div>
+                        </div>
+                        <div class="tags">Burger, Chowmein, Rolls</div>
+                        <div class="rest-meta">
+                            <span><i class="far fa-clock"></i> 25-30 min</span>
+                            <span>Free Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="rest-card">
+                    <div class="rest-img-container">
+                        <span class="discount-tag" style="background:#2ecc71">New</span>
+                        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant 2">
+                    </div>
+                    <div class="rest-info">
+                        <div class="rest-header">
+                            <h3>PASTA HUB</h3>
+                            <div class="rating"><i class="fas fa-star"></i> 4.5</div>
+                        </div>
+                        <div class="tags">Italian, Pizza, Pasta</div>
+                        <div class="rest-meta">
+                            <span><i class="far fa-clock"></i> 40-50 min</span>
+                            <span>29 RUPEES Delivery</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="rest-card">
+                    <div class="rest-img-container">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Restaurant 3">
+                    </div>
+                    <div class="rest-info">
+                        <div class="rest-header">
+                            <h3>Sushi Master</h3>
+                            <div class="rating"><i class="fas fa-star"></i> 4.9</div>
+                        </div>
+                        <div class="tags">Japanese, Sushi, Seafood</div>
+                        <div class="rest-meta">
+                            <span><i class="far fa-clock"></i> 30-40 min</span>
+                            <span>49 RUPEES Delivery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-outline">See All Restaurants</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PROMO OFFERS -->
+    <section class="offers" id="offers">
+        <div class="container">
+            <div class="offers-container">
+                <div class="offer-card">
+                    <div class="offer-text">
+                        <h3>Free Delivery</h3>
+                        <p>On your first order over 50 RUPEES</p>
+                        <button class="offer-btn">Claim Now</button>
+                    </div>
+                    <div class="offer-img">🛵</div>
+                </div>
+                <div class="offer-card secondary">
+                    <div class="offer-text">
+                        <h3>50% Discount</h3>
+                        <p>Order combo meals today</p>
+                        <button class="offer-btn">Order Now</button>
+                    </div>
+                    <div class="offer-img">🎁</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. TESTIMONIALS -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Customers Say</h2>
+            </div>
+            <div class="testimonial-grid">
+                <!-- Review 1 -->
+                <div class="test-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="user-img">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="test-text">"Super fast delivery! The food arrived hot and fresh. The interface is so easy to use. Highly recommended!"</p>
+                    <h4 class="user-name">Ojaswi Pandey </h4>
+                </div>
+                <!-- Review 2 -->
+                <div class="test-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="user-img">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="test-text">"I love the variety of restaurants available. It's my go-to app for Friday night dinners."</p>
+                    <h4 class="user-name">Sayan Ali</h4>
+                </div>
+                <!-- Review 3 -->
+                <div class="test-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="user-img">
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="test-text">"Great offers and discounts. I saved so much using the combo deals. Customer support is also very helpful."</p>
+                    <h4 class="user-name">Bhoomija Pandey</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. APP DOWNLOAD -->
+    <section class="app-download" id="app">
+        <div class="container">
+            <div class="app-content">
+                <div class="app-text">
+                    <h2>Get the Mobile App</h2>
+                    <p>Order food on the go. Track your delivery in real-time. Get exclusive app-only discounts.</p>
+                    
+                    <div class="app-buttons">
+                        <a href="#" class="store-btn">
+                            <i class="fab fa-apple fa-2x"></i>
+                            <div class="store-text">
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="store-btn">
+                            <i class="fab fa-google-play fa-2x"></i>
+                            <div class="store-text">
+                                <span>GET IT ON</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="app-image-container">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR65m8I5cZUsRG2vsipueLPUvMIf7Rwy88zFxNTFQDEWdxnUZDTkVO01G8&s" alt="App Preview">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Foodie</h3>
+                    <p>Delicious food delivered to your door in minutes. We are committed to quality and speed.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Help & Support</a></li>
+                        <li><a href="#">Partner with us</a></li>
+                        <li><a href="#">Ride with us</a></li>
+                        <li><a href="#">support@foodie.com</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Cities</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">NEW DELHI</a></li>
+                        <li><a href="#">GURUGRAM</a></li>
+                        <li><a href="#">SOHNA</a></li>
+                        <li><a href="#">NOIDA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 The Foodie Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
